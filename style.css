@@ -5,3 +5,57 @@ boody {
 h1 {
 	color : blue;
 }
+
+
+/*--- page layout defs: --------------------------------------------*/
+
+/*--- hdr --- */
+    div.hdr {
+        /* positioning: */
+        position: fixed;
+        width: 100%;
+        height: 10%;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        padding-left: 10%;
+
+        /* content: */
+        
+        /* aesthetics: */
+        /* background-color: gray; */
+        border-bottom: 1px solid black;
+    }
+    
+    div.hdr h1 {
+        color: black;    
+    }
+/*--- /hdr --- */
+
+/*--- menu ---*/
+    div.menu {
+        /* positioning: */
+        position: fixed;
+        width: 10%;
+        height: 100%;
+        top: 10%;
+        left:0; 
+        margin: 0;
+        padding: 0;
+
+        /* content: */
+
+        /* aesthetics: */
+        border-right: 1px solid black;
+    }
+/*--- /menu ---*/
+
+/*--- main ---*/
+    div.main {
+        position: fixed;
+        top: 10%;
+        left: 10%;
+        
+    }
+/*--- /main ---*/
