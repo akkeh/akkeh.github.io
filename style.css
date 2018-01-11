@@ -3,6 +3,7 @@ header {
     clear: both;
     border-bottom: solid 1px;
     padding: 0 0 0 130;
+    /*background-color: gray;*/
 }
 
 nav {
@@ -12,7 +13,10 @@ nav {
     float: left;
     margin: 0 10 0 0;
     border-right: solid 1px;
+    /*background-color: gray;*/
 }
 
+
 main {
+    padding: 20;
 }
