@@ -17,6 +17,9 @@ nav {
 }
 
 main {
+    text-align: justify;
+    padding-left: 20;
+    padding-top: 20;
     padding: 20;
 }
 
