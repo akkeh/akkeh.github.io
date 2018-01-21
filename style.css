@@ -1,14 +1,18 @@
+body {
+    font-family: "Courier New", courier, Monospace;
+}
+
 header {
     text-align: left;
     clear: both;
     border-bottom: solid 1px;
-    padding: 0 0 0 130;
+    padding: 0 0 0 128;
     /*background-color: gray;*/
 }
 
 nav {
     height: 100%;
-    width: 120;
+    width: 128;
     text-align: left;
     float: left;
     margin: 0 10 0 0;
@@ -19,6 +23,7 @@ nav {
 main {
     text-align: justify;
     padding-left: 20;
+    margin-left: 128;
     padding-top: 20;
     padding: 20;
 }
