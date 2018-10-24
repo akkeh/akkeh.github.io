@@ -27,7 +27,7 @@ def genRoll(title, menu, contentDir):
                 for line in lines[1:]:
                     cDict[date] = cDict[date] + line;
     content = '';
-    for k in sorted(cDict.keys()):
+    for k in sorted(cDict.keys())[::-1]:
         content += cDict[k] + '\n<hr>\n';
     # </main>       
     # </body>
