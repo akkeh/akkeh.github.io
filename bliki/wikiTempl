@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Title
+</title>
+</head>
+<body>
+	<header>
+		<h1>/blog</h1>
+	</header>
+	<nav>
+		<ul>
+			<li><a href="index.html">home</a></li>
+			<li><a href="proj.html">projects</a></li>
+			<li><a href="links.html">links</a></li>
+			<li><a href="docs/cv_amhouben.pdf">CV</a></li>
+		</ul>
+	</nav>
+
+<main>
+Content nbadsfdsf
+dafdsa
+
+</main>
+</body>
+</html>

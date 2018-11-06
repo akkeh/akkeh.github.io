@@ -66,8 +66,9 @@ def genWiki(title, menu, contentDir='./content/', blogDir='../blog/'):
                     pass
     # generate pages:
     for article in cont.keys():
-        with open(blogDir+article, 'w') as f:
-            pass;
+        with open(blogDir+article+'.html', 'w') as f:
+            page = genWikiPage(cont[article]['title'], menu, cont[article]['content'])
+            f.write(page)
         
         # write update info:
         if cont[article]['history'].split(' ')[-1][:-1] != cont[article]['T']:
@@ -90,7 +91,7 @@ def getModT(fn):
         dd = '0'+dd;
     return yyyy + mm + dd 
 
-def genWikiiPage(title, menu, content):
+def genWikiPage(title, menu, content):
     docstr = '<!DOCTYPE html>\n'
     # <html>
     # <head>
@@ -103,9 +104,6 @@ def genWikiiPage(title, menu, content):
         nav = nav + '\t\t\t<li><a href="' + link + '">' + name + '</a></li>\n'
     nav = nav + '\t\t</ul>\n\t</nav>\n'
     # <main>
-    content = '';
-    for k in sorted(cDict.keys())[::-1]:
-        content += cDict[k] + '\n<hr>\n';
     # </main>       
     # </body>
     # </html>
