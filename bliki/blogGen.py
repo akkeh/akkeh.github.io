@@ -54,11 +54,20 @@ def genWiki(title, menu, contentDir='./content/', blogDir='../blog/'):
             if len(lines) > 0:
                 if lines[0] == '!WIKI\n':
                     cont[titl] = {'title': lines[1]};
-                    if(lines[2].find('keywords:') == 0):
+                    if(lines[2].find('!keywords:') == 0):
                         cont[titl]['keywords'] = lines[2][10:].split(' ');
-                    cont[titl]['content'] = '';
+                    cont[titl]['content'] = '<h1>' + cont[titl]['title'] + '</h1>';
+                    cFlag = True
+                    cont[titl]['bib'] = None
                     for line in lines[3:-1]:
-                        cont[titl]['content'] = cont[titl]['content'] + line;
+                        if line[:5] == '!bib:'
+                            cFlag = False
+                            cont[titl]['bib'] = ''
+                        if cFlag:
+                            cont[titl]['content'] = cont[titl]['content'] + line;
+                        else:   # bibliography
+                            cont[titl]['bib'] = cont[titl]['bib'] + line
+                        
                     cont[titl]['history'] = lines[-1];
                     cont[titl]['T'] = getModT(contentDir+fn);
                     cont[titl]['raw'] = lines;
@@ -67,7 +76,7 @@ def genWiki(title, menu, contentDir='./content/', blogDir='../blog/'):
     # generate pages:
     for article in cont.keys():
         with open(blogDir+article+'.html', 'w') as f:
-            page = genWikiPage(cont[article]['title'], menu, cont[article]['content'])
+            page = genWikiPage(cont[article]['title'], menu, cont[article]['content'], bib=cont[article]['bib'])
             f.write(page)
         
         # write update info:
@@ -91,7 +100,7 @@ def getModT(fn):
         dd = '0'+dd;
     return yyyy + mm + dd 
 
-def genWikiPage(title, menu, content):
+def genWikiPage(title, menu, content, bib=None):
     docstr = '<!DOCTYPE html>\n'
     # <html>
     # <head>
@@ -104,6 +113,7 @@ def genWikiPage(title, menu, content):
         nav = nav + '\t\t\t<li><a href="' + link + '">' + name + '</a></li>\n'
     nav = nav + '\t\t</ul>\n\t</nav>\n'
     # <main>
+    # scan through content: link keywords, titles & citations
     # </main>       
     # </body>
     # </html>

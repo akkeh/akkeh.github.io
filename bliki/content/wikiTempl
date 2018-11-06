@@ -1,7 +1,18 @@
 !WIKI
 Title
-keywords: kw1 kw2 
+!keywords: kw1 kw2 
 Content nbadsfdsf
 dafdsa
 
-history: 20181104
+!bib: 
+LastNameAuthor1yyyy:
+    Author1, Author2, ..., AuthorN
+    yyyy
+    Title
+    link/publisher/journal/etc
+LastNameAuthor1yyyy:
+     Author1, Author2, ..., AuthorN
+    yyyy
+    Title
+    link/publisher/journal/etc
+!history: 20181104
