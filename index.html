@@ -6,18 +6,11 @@
 	<title>Akke M. Houben</title>
 </head>
 
-<body>
+<body onload="loadMenu()">
 <header>
     <h1>/home</h1>
 </header>
-<nav>
-    <ul>
-    <li><a href="index.html"> home </a></li>
-    <li><a href="proj.html">projects</a></li>
-    <li><a href="links.html">links</a></li>
-    <li><a href="docs/cv_amhouben.pdf">CV</a></li>
-    
-    </ul>
+<nav id="menu">
 </nav>
 
 <main>
@@ -70,6 +63,10 @@ I have a basis in (digital) signal processing and system design/analysis, combin
 </p>
 -->
 </main>
+
+<!--<script> function loadMenu() { document.getElementById("menu").innerHTML = "test"; } </script> -->
+<script src="menu.js"></script>
 </body>
 
 </html>
+<!--    document.getElementById("menu").innerHTML = "test";-->
