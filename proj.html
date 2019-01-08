@@ -6,20 +6,11 @@
 	<title>Akke M. Houben</title>
 </head>
 
-<body>
+<body onload="loadMenu()">
 <header>
     <h1>/projects</h1>
 </header>
-<nav>
-    <ul>
-    <li><a href="index.html"> home </a></li>
-    <!--<li><a href="about.html">interests</a></li>-->
-    <li><a href="proj.html">projects</a></li>
-    <li><a href="links.html">links</a></li>
-    <li><a href="docs/cv_amhouben.pdf">CV</a></li>
-    
-    </ul>
-</nav>
+<nav id="menu"> <!-- gets populated by body.onload --> <nav>
     <main>
 
     <h2 style="margin:1; margin-bottom:0">Mechanisms underlying synaptic plasticity </h2>
@@ -43,6 +34,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;more info: <a href='https://github.com/akkeh/neuplt'>github repo</a>
     <hr>
     </main>
+<script src="menu.js"></script>
 </body>
 
 </html>

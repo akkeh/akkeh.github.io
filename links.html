@@ -6,20 +6,11 @@
 	<title>Akke M. Houben</title>
 </head>
 
-<body>
+<body onload="loadMenu()">
 	<header>
 		<h1>/links</h1>
 	</header>
-    <nav>
-        <ul>
-        <li><a href="index.html"> home </a></li>
-        <!--<li><a href="about.html">interests</a></li>-->
-        <li><a href="proj.html">projects</a></li>
-        <li><a href="links.html">links</a></li>
-        <li><a href="docs/cv_amhouben.pdf">CV</a></li>
-        
-        </ul>
-    </nav>
+    <nav id="menu">  <!-- gets populated by body.onload --> </nav>
     <main>
     
     <h2 style="margin:1; margin-bottom:0">Personal links</h2>
@@ -32,6 +23,7 @@
     </ul>
 
 </main>
+<script src="menu.js"></script>
 </body>
 
 </html>
