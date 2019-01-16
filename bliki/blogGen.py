@@ -60,7 +60,7 @@ def genWiki(title, menu, contentDir='./content/', blogDir='../blog/'):
                     cFlag = True
                     cont[titl]['bib'] = None
                     for line in lines[3:-1]:
-                        if line[:5] == '!bib:'
+                        if line[:5] == '!bib:':
                             cFlag = False
                             cont[titl]['bib'] = ''
                         if cFlag:
@@ -103,6 +103,7 @@ def getModT(fn):
 def genWikiPage(title, menu, content, bib=None):
     docstr = '<!DOCTYPE html>\n'
     # <html>
+    mathjax = '<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: { inlineMath: [ ["$","$"] ], processEscapes: true } }); </script>\n<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML" async></script>\n'
     # <head>
     head = '\t<link rel="stylesheet" type="text/css" href="style.css">\n\t<title>' + title + '</title>\n'
     # </head>
@@ -117,7 +118,7 @@ def genWikiPage(title, menu, content, bib=None):
     # </main>       
     # </body>
     # </html>
-    return docstr + '<html>\n' + '<head>\n' + head + '</head>\n' + '<body>\n' + hdr + '\n' + nav + '\n' + '<main>\n' + content + '</main>\n</body>\n</html>'
+    return docstr + '<html>\n' + mathjax + '<head>\n' + head + '</head>\n' + '<body>\n' + hdr + '\n' + nav + '\n' + '<main>\n' + content + '</main>\n</body>\n</html>'
 
 
 title = 'Bliki'
@@ -129,4 +130,4 @@ menu = [ ('home', 'index.html'),
 
 print(genRoll(title, menu, './content/'))
 
-
+genWiki(title, menu)

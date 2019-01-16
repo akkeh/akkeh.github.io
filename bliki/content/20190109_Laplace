@@ -1,0 +1,28 @@
+!WIKI
+Laplace transform notes
+!keywords: Laplace; transfer function; system analysis
+
+On this page I am collecting information and notes regarding the Laplace transform and it's possible application to the analysis of the frequency transfer of neuronal systems.
+
+<h3>Definition of the Laplace transform</h3>
+The Laplace transform transforms a function of a real variable (time) to a function of a complex variable (complex frequency):
+$$ \mathcal{L}: t \mapsto s; t \in \mathbb{R}, s \in \mathbb{C}$$
+
+The forward Laplace transform of a function $f(t)$ is denoted as $\mathcal{L}\{f\}(s)$, indicating the independent variable of the transform $s$, and is defined as:
+$$ \mathcal{L}\{f\}(s) = \int_0^{\infty} f(t) \mathcal{e}^{-st} dt$$
+(The function $f$ must be locally integratable on $[0, \infty)$)
+
+The inverse Laplace transform $\mathcal{L}\{F\}(t)$ gives back a function of the real-valued variable:
+$$ \mathcal{L}\{F\}(t) = \frac{1}{2 \pi \mathcal{i}} \lim_{T \to \infty} \int_{\gamma-\mathcal{i}T}^{\gamma+\mathcal{i}T} \mathcal{e}^{st}F(s) ds; \gamma \in \mathbb{R} $$
+!bib: 
+LastNameAuthor1yyyy:
+    Author1, Author2, ..., AuthorN
+    yyyy
+    Title
+    link/publisher/journal/etc
+LastNameAuthor1yyyy:
+     Author1, Author2, ..., AuthorN
+    yyyy
+    Title
+    link/publisher/journal/etc
+!history 20190109
