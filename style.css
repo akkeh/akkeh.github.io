@@ -12,22 +12,24 @@ header {
 
 nav {
     height: 100%;
-    width: 128;
+    width: 128px;
     text-align: left;
     float: left;
     margin: 0 10 0 0;
-    border-right: solid 1px;
-    background-color: #f2f2f2;
+    #border-right: solid 1px;
+    #background-color: #f2f2f2;
+    position: absolute;
 }
 
 main {
     text-align: justify;
-    padding-left: 20;
-    margin-left: 128;
-    padding-top: 20;
-    padding: 20;
+    margin-left: 128px;
+    padding: 10px;
 }
 
+img {
+    padding: 10px;
+};
 date {
     
 }
