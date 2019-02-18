@@ -7,7 +7,7 @@ header {
     clear: both;
     border-bottom: solid 1px;
     padding: 0 0 0 128;
-    background-color: lightgray;
+    #background-color: lightgray;
 }
 
 nav {
