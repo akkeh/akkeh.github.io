@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Plotter</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body onload="init()"> 
+        <canvas id="myCanvas" width="1024" height="512"> a canvas in which graphs are drawn  </canvas>
+        <input type="number" id="Iext" value="1">
+        <canvas id="myCanvas2" width="1024" height="512"> a canvas in which graphs are drawn  </canvas>
+
+    </body>
+    <script type="text/javascript" src="./libs/fft.js"></script>
+    <script>
+        function init() {
+            var c = document.getElementById("myCanvas");
+            c.M = 256;
+            c.n = 0;
+            c.N = 10000;
+            c.tauDt = 11.0 / 0.1;
+            c.Vth = 1; c.Vreset = -3;
+            c.V = new Float32Array(c.N);
+            var c2 = document.getElementById("myCanvas2");
+            c2.fs = 10000.;
+            c2.maxFreq = 500;
+            var n;
+            for(n = 0; n<c.N; n++)
+                c.V[n] = 0;
+
+            c.fps = 25.6 / 50;
+            setInterval(update, (1/c.fps*25.6), c, c2);    // 25.6ms per 50ms
+        }
+        function mod(n, M) {
+            return (n >= 0) ? n%M : (M-((-n)%M));
+        }
+        function update(c, c2) {
+            var I = document.getElementById("Iext").value;
+            var m;
+            for(m = 0; m<c.M; m++) {
+                v = c.V[mod(c.n+m-1, c.N)];
+                c.V[mod(c.n+m, c.N)] = v + (I - v)/c.tauDt;
+                if(c.V[mod(c.n+m, c.N)] > c.Vth)
+                    c.V[mod(c.n+m, c.N)] = c.Vreset;
+            };
+            c.n = mod(c.n+m, c.N);
+            if(mod(c.n, c.N) < c.M)
+                drawFFT(c2, c.V.slice());
+            draw(c);
+        };
+
+        function draw(c) {
+            var ctx = c.getContext("2d");
+            var w = c.width; var h = c.height;
+            var dw = w / c.N; var dh = h / (c.Vth - c.Vreset);
+            if(ctx) {
+                // draw x-axis
+                ctx.clearRect(0, 0, w, h);
+                ctx.fillText(`${c.fps} fps`, w-50, 10);
+                ctx.beginPath();
+                    ctx.moveTo(w, h/(c.Vth - c.Vreset));
+                    ctx.lineTo(0, h/(c.Vth - c.Vreset));
+                    for(var n=0; n<c.N/1000; n++) {
+                        ctx.moveTo(n*dw*1000, 0.1*dh+h/(c.Vth - c.Vreset));
+                        ctx.lineTo(n*dw*1000, -0.1*dh+h/(c.Vth - c.Vreset));
+                    }
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = '#000000';
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(0, dh-c.V[0]*dh);
+                for(var n = 1; n<c.N; n++) {
+                    ctx.lineTo(n*dw, dh-c.V[n]*dh);
+                };
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = '#0000FF';
+                ctx.stroke();
+            }
+        }
+
+        function drawFFT(c, V) {
+            var ctx = c.getContext("2d");
+            if(ctx) {
+                var outRe = V;
+                var outIm = new Array(V.length).fill(0);
+                transform(outRe, outIm);
+                var n = 0; var M = Math.floor(c.maxFreq / c.fs*outRe.length);
+                var mag = new Array(M);
+                var dw = c.width / M;
+                var maxMag = 0;
+                for(m = 1; m<M; m++) {
+                    mag[m] = Math.sqrt(outRe[m]*outRe[m] + outIm[m]*outIm[m]);
+                    if(mag[m] > maxMag)
+                        maxMag = mag[m];
+                }
+                mag[0] = 0;
+                ctx.clearRect(0, 0, c.width, c.height);
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                for(m = 1; m<M; m++) 
+                    ctx.lineTo(m*dw, c.height*(1-mag[m]/maxMag));
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = '#0000FF';
+                ctx.stroke();
+            }
+            
+        }
+    </script>
+
+    <style type="text/css">
+        canvas { 
+            border: 1px solid black; 
+            width: 90vw;
+            height: 35vh;
+            margin: 5%;
+        }
+    </style>
+</html>

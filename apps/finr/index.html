@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body onload="init()">
+<h1 style="margin:0px; margin-left: 2vw;">(in)Finite neural responses</h1>
+<div style="width:100vw;">
+    <canvas id="input" width="1024" height="512" style="width:45vw; height: 30vh; float:left"> input graph </canvas>
+    <canvas id="Vm" width="1024" height="512" style="width:45vw; height:30vh; float: left"> Neuron Vm traces </canvas>
+</div>
+<div style="width:100vw;">
+    <div id="parameters" style="width:25vw; height: 45vh; margin:2vw; border:1px solid black; float: left;">
+    </div>
+    <canvas id="spec" width="1024" height="512" style="width:65vw; height: 45vh; float: left"> Vm spectra </canvas>
+</div>
+</body>
+<script type="text/javascript" src="./libs/fft.js"></script>
+<script type="text/javascript" src="./finr.js"></script>
+</html>

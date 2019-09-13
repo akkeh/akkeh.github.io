@@ -1,0 +1,9 @@
+{
+    "name":             "Helloworld",
+    "short_name":        "hellow",
+    "lang":             "en-US",
+    "start_url":        "./index.html",
+    "display":          "standalone",
+    "background_color": "green",
+    "theme_color":      "green"
+}
