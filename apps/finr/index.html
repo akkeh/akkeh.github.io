@@ -14,6 +14,21 @@
 </div>
 <div style="width:100vw;">
     <div id="parameters" style="width:25vw; height: 45vh; margin:2vw; border:1px solid black; float: left;">
+    <!--- PARAMETERS -->
+    Input parameters:<br>
+    <label for="Itype"> type: </label>
+    <select id="Itype" onchange="Iselect(this.value)">
+        <option value="dc">DC</option>
+        <option value="norm">Gaussian</option>
+        <option value="white">White noise</option>
+    </select>
+    <div id="Iparams" style="width:25vw; background-color:grey">
+
+    </div>
+    
+    <hr> 
+    Neuron parameters:
+    <!--- ---------- -->
     </div>
     <canvas id="spec" width="1024" height="512" style="width:65vw; height: 45vh; float: left"> Vm spectra </canvas>
 </div>
