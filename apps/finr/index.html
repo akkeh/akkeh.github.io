@@ -17,10 +17,11 @@
     <!--- PARAMETERS -->
     Input parameters:<br>
     <label for="Itype"> type: </label>
-    <select id="Itype" onchange="Iselect(this.value)">
+    <select id="Itype" onchange="changeInputType(this.value)">
         <option value="dc">DC</option>
         <option value="norm">Gaussian</option>
         <option value="white">White noise</option>
+        <option value="poisson">Poissonian</option>
     </select>
     <div id="Iparams" style="width:25vw; background-color:grey">
 
@@ -34,5 +35,6 @@
 </div>
 </body>
 <script type="text/javascript" src="./libs/fft.js"></script>
+<script type="text/javascript" src="./Plot.js"></script>
 <script type="text/javascript" src="./finr.js"></script>
 </html>
