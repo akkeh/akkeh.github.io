@@ -1,5 +1,13 @@
 canvas {
-    border: 1px solid black;
+    border: 2px solid black;
     width: 90vw;
     margin: 2vw;
+}
+
+select {
+    margin: 1vw;
+}
+
+input[type=number] {
+    width: 5em;
 }

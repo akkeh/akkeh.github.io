@@ -16,36 +16,21 @@ function init() {
 
     // neurons:
     document.pltVm = new Plot(document.getElementById("Vm"), document.M, [-3, 5]);
-    document.pltVm.params['tauVa'] = 11.;
-    document.pltVm.params['Vtha'] = 1;
-    document.pltVm.params['Vpeaka'] = 5;
-    document.pltVm.params['Vreseta'] = -3;
-    document.pltVm.Sa = new Float32Array(document.M);
-    document.pltVm.Qab = 0.0
-    document.pltVm.params['tauQab'] = 5.0;
-    document.pltVm.params['qab'] = 5.0;
-
     document.pltVm.addLine(document.M);
     document.pltVm.lines[1].strokeStyle = '#FF0000';
-    document.pltVm.params['tauVb'] = 11.;
-    document.pltVm.params['Vthb'] = 1;
-    document.pltVm.params['Vpeakb'] = 5;
-    document.pltVm.params['Vresetb'] = -3;
-    document.pltVm.Sb = new Float32Array(document.M);
-    document.pltVm.Qba = 0.0; 
-    document.pltVm.params['tauQba'] = 5.0;
-    document.pltVm.params['qba'] = 5.0;
 
-    document.pltVm.params['Dba'] = 1;//Math.floor(1/document.Dt);   // delay a->b
-    document.pltVm.params['Wba'] = 0;   // weight a->b
-    document.pltVm.params['Dab'] = 1 //Math.floor(1/document.Dt);   // delay b->a
-    document.pltVm.params['Wab'] = 0.5;   // weight b->a
-
+    document.NN = new NN(2, document.Dt);
+    document.NN.W[0][1] = 0.125;  // b->a
+    document.NN.D[0][1] = 11.0 / document.Dt;
 
     // spectrogram:
-    var maxFreq = 500;
-    var maxBin = Math.floor(maxFreq/(1000.0/document.Dt)*document.M);
+    var maxFreq = 250;
+    var fftN = 10000; //document.M;
+    while(Math.log2(fftN) - Math.floor(Math.log2(fftN)) != 0) fftN += 1;
+    var maxBin = Math.floor(maxFreq/(1000.0/document.Dt)*fftN);
     document.pltSpec = new Plot(document.getElementById("spec"), maxBin, [0, 1]);
+    document.pltSpec.fftN = fftN;
+
     document.pltSpec.addLine(maxBin);
     document.pltSpec.lines[1].strokeStyle = '#FF0000';
 
@@ -54,57 +39,35 @@ function init() {
 };  // init()
 
 function update() {
+    var params = document.pltInput.params;
+
     // update input:
-    var input = generateInput(document.pltInput.params['type'], document.blocksize, document.pltInput.params);
-    var inputA = generateInput(document.pltInput.params['type'], document.blocksize, document.pltInput.params);
-    var inputB = generateInput(document.pltInput.params['type'], document.blocksize, document.pltInput.params);
+    var input = generateInput(params['type'], document.blocksize, params);
+    var inputA = generateInput(params['type'], document.blocksize, params);
+    var inputB = generateInput(params['type'], document.blocksize, params);
     for(var m = 0; m<document.blocksize; m++) {
         // update input:
-        document.pltInput.lines[0].x[mod(document.n + m, document.M)] = document.pltInput.params['rho']*input[m] + (1-document.pltInput.params['rho'])*inputA[m];
-        document.pltInput.lines[1].x[mod(document.n + m, document.M)] = document.pltInput.params['rho']*input[m] + (1-document.pltInput.params['rho'])*inputB[m];
+        document.pltInput.lines[0].x[mod(document.n + m, document.M)] = params['rho']*input[m] + (1-params['rho'])*inputA[m];
+        document.pltInput.lines[1].x[mod(document.n + m, document.M)] = params['rho']*input[m] + (1-params['rho'])*inputB[m];
     };
 
     // update neurons:
-    var Iexta, Va, dVa;
-    var Va_ = document.pltVm.lines[0].x[mod(document.n-1, document.M)];
-    var Iextb, Vb, dVb, Inn;
-    var Vb_ = document.pltVm.lines[1].x[mod(document.n-1, document.M)];
+    var Iexta, Iextb, V;
     for(var m=0; m<document.blocksize; m++) {
         Iexta = document.pltInput.lines[0].x[mod(document.n+m, document.M)];
-        Iexta = 0;
-        document.pltVm.Qab = -document.Dt*document.pltVm.Qab/document.pltVm.params['tauQab'] + document.pltVm.Sb[mod(document.n-document.pltVm.params['Dab'], document.M)] * document.pltVm.params['Wab'];
-        Inna = document.pltVm.params['qab']*document.pltVm.Qab;
 
         Iextb = document.pltInput.lines[1].x[mod(document.n+m, document.M)];
-        document.pltVm.Qba = -document.Dt*document.pltVm.Qba/document.pltVm.params['tauQba'] + document.pltVm.Sa[mod(document.n-document.pltVm.params['Dba'], document.M)] * document.pltVm.params['Wba'];
-        Innb= document.pltVm.params['qba']*document.pltVm.Qba;
-        Va = Va_;
-        Vb = Vb_;
-        dVa = (Iexta+Inna-Va) / document.pltVm.params['tauVa'];
-        dVb = (Iextb+Innb-Vb) / document.pltVm.params['tauVb'];
-        Va = Va + document.Dt*dVa;
-        Vb = Vb + document.Dt*dVb;
-        Va_ = Va;
-        Vb_ = Vb;
-        document.pltVm.Sa[mod(document.n+m, document.M)] = 0;
-        if(Va_ > document.pltVm.params['Vtha']) {
-            Va_ = document.pltVm.params['Vreseta'];
-            Va = document.pltVm.params['Vpeaka'];
-            document.pltVm.Sa[mod(document.n+m, document.M)] = 1;
-        };
-        document.pltVm.Sb[mod(document.n+m, document.M)] = 0;
-        if(Vb_ > document.pltVm.params['Vthb']) {
-            Vb_ = document.pltVm.params['Vresetb'];
-            Vb = document.pltVm.params['Vpeakb'];
-            document.pltVm.Sb[mod(document.n+m, document.M)] = 1;
-        };
-        document.pltVm.lines[0].x[mod(document.n+m, document.M)] = Va;
-        document.pltVm.lines[1].x[mod(document.n+m, document.M)] = Vb;
+
+        V = document.NN.update([Iexta, Iextb]);
+        document.pltVm.lines[0].x[mod(document.n+m, document.M)] = document.NN.V[0];
+        document.pltVm.lines[1].x[mod(document.n+m, document.M)] = document.NN.V[1];
     };
 
     // update spectrogram:
-    var outRe = document.pltVm.lines[0].x.slice();
-    var outIm = new Float32Array(document.M).fill(0);
+    var outRe = new Float32Array(document.pltSpec.fftN).fill(0);
+    for(var n=0; n<document.M; n++)
+        outRe[n] = document.pltVm.lines[0].x[n];
+    var outIm = new Float32Array(document.pltSpec.fftN).fill(0);
     transform(outRe, outIm);    // fft.js
     for(var m=0; m<document.pltSpec.M; m++) 
         document.pltSpec.lines[0].x[m] = 2/document.M*Math.sqrt(outRe[m]*outRe[m] + outIm[m]*outIm[m]);
