@@ -14,7 +14,7 @@
     <main>
         <h2 style="margin:1; margin-bottom:0"><span style="font-weight:normal"></span>Introduction</h2>
 
-        <p>A collection of short essays about several topics that interest me. Among others I write about my main interest: theoretical neuroscience and its connection to other topics such as philosophy. biotechnology, biology, society, computers and politics. Besides that I will include short snippets of code and small 'tutorials' on techniques that interest me.
+        <p>A collection of short essays about several topics that interest me. I write about my main interest: theoretical neuroscience, and its connection to other topics such as philosophy. biotechnology, biology, society, computers and politics. Besides that I will include short snippets of code and small 'tutorials' on techniques that interest me.
         </p>
         <hr style="height:1px;background-color:black"><br><br>
         <h2 style="margin:1; margin-bottom:0"><span style="font-weight:normal">20200915</span> First-passage-time distribution of leaky IF neuron</h2>
@@ -24,11 +24,11 @@
         </p>
         <p>
             A widely used model of a single neuron is the leaky integrate-and-fire neuron, originally introduced by Lapicque in 1907. This abstract model consists of a description of the evolution of a membrane voltage \(v\) of a neuron, driven by an input \(I\):
-                $$ \tau \dot{v} = I-v. \tag{1} $$
+                $$ \tau \frac{dv}{dt} = I(t)-v(t). \tag{1} $$
             The parameter \(\tau\) is the membrane time-constant and determines how fast the membrane potential follows changes in steady state inputs, and how fast the potential decays back to its steady state after a perturbation. 
-            The second component of the leaky intergrate-and-fire neuron is a spike-and-reset rule: if the potential reaches a threshold value \(v \leq v_c\) it is reset to a value \(v_r < v_c\), whereafter its evolution is again governed by <a href="#mjx-eqn-1">(1)</a>. The firing rate of the leaky intergrate-and-fire neuron can thus be determined from the time it takes between consecutive spike-and-resets.
+            The second component of the leaky integrate-and-fire neuron is a spike-and-reset rule: if the potential reaches a threshold value \(v \leq v_c\) it is reset to a value \(v_r < v_c\), whereafter its evolution is again governed by <a href="#mjx-eqn-1">(1)</a>. The firing rate of the leaky integrate-and-fire neuron can thus be determined from the time it takes between consecutive spike-and-resets. In this post I will look at the expression of the inter-spike-interval distribution of the leaky integrate-and-fire neuron.
         </p>
-        <h3 style="margin-bottom:0">Deterministic, constant input</h3>
+        <h3 style="margin-bottom:0">Deterministic constant input</h3>
         <p style="margin-top:0">
         	For constant inputs \(I(t) = \bar{I}\), the membrane potential shows an exponential approach to the value \( v_\infty = \bar{I} \). In the case of a constant supra-threshold input \( \bar{I}>v_c \) it is straightforward to calculate the firing rate of the model neuron:
 		$$ T_{isi} = -\tau ln\left(\frac{v_c-\bar{I}}{v_r-\bar{I}}\right). $$
@@ -37,35 +37,81 @@
         <p style="margin-top:0">
         	However, as stated before, neurons are generally considered to be noisy. This noisiness can be captured by considering an input
         		$$ I(t) = \mu + \sigma \eta(t), $$
-	        in which \(\mu\) is a steady state (mean) input, and \(\eta(t)\) is a fluctuating noise input. With this input <a href="#mjx-eqn-1">(1)</a> describes a stochastic differential equation (SDE). A classical problem is to describe the distributions of times that such a process crosses a threshold value, called the first-passage-time (FPT) distribution of said process. In the case that the noise part of the input is taken to be a gaussian white noise \(\eta(t) = dW_t\), the membrane potential follows an Ornstein-Uhlenbeck process. The exact description of the first-passage-time distribution (the 'first-passage-time problem') of Ornstein-Uhlenbeck type processes is, however, still an unsolved problem.
+	        in which \(\mu\) is a constant (mean) input, and \(\eta(t)\) is a fluctuating noise input. With this input <a href="#mjx-eqn-1">(1)</a> becomes a stochastic differential equation (SDE). A classical problem is to describe the first-passage-time (FTP) distribution, the distribution of the times that it takes for such a process to cross a threshold value, of SDEs. In the case that the noise part of the input is taken to be a gaussian white noise \(\eta(t) = dW_t\), the membrane potential follows an <a href="en.wikipedia.org/wiki/Ornstein-Uhlenbeck_process">Ornstein-Uhlenbeck process</a> (Uhlenbeck & Ornstein, 1930; Ricciardi & Sacerdote, 1979). The exact description of the first-passage-time distribution (the 'first-passage-time problem') of Ornstein-Uhlenbeck type processes is, however, still an unsolved problem.
     	</p>
         <p>
             It will thus in general not be possible to obtain an exact expression for the first-passage-time distribution of the leaky integrate-and-fire neuron. 
-            Gerstein and Mandelbrot (1964) considered the first-passage-time distribution of the perfect integrate-and-fire neuron, which is equal to the leaky integrate-and-fire neuron, but without the exponential drive back to a resting potential (i.e. <a href="#mxj-eq-1">(1)</a> without the \(-v\) term on the r.h.s.). In this case the membrane potential describes a biased Brownian motion, for which exact descriptions of the first-passage-time distribution are known.
+            Gerstein and Mandelbrot (1964) considered the first-passage-time distribution of the perfect integrate-and-fire neuron, which is equal to the leaky integrate-and-fire neuron, but without the exponential drive back to a resting potential (i.e. <a href="#mjx-eqn-1">(1)</a> without the \(-v\) term on the r.h.s.). In this case the membrane potential describes a (biased) Brownian motion, for which exact descriptions of the first-passage-time distribution are known.
         </p>
         <p>
-        However, an important characteristic of neuronal membrane potentials is the relaxation to a resting potential in absence of input (Gluss, 1967). Steps have been made towards the expression of the first-passage-time distribution of the leaky intergrate-and-fire neuron. Exact expression exist for restricted sets of parameters (Siebert, 1969; Sugiyama, Moore & Perkel, 1970), in Laplace transformed form (Roy & Smith, 1969; Sugiyama, Moore & Perkel, 1970, Capocelli & Ricciardi, 1971), as well as by approximation (Swalger & Schimansky-Geier, 2008).
+        However, an important characteristic of neuronal membrane potentials is the relaxation to a resting potential in absence of input (Gluss, 1967). Steps have been made towards the expression of the first-passage-time distribution of the leaky integrate-and-fire neuron. Exact expression exist for restricted sets of parameters (Siebert, 1969; Sugiyama, Moore & Perkel, 1970), in Laplace transformed form (Roy & Smith, 1969; Sugiyama, Moore & Perkel, 1970, Capocelli & Ricciardi, 1971), as well as by approximation (Swalger & Schimansky-Geier, 2008).
         </p>
         <h3 style="margin-bottom:0">A naive and an-exact FPT distribution</h3>
         <p style="margin-top:0">
-        Here however, I would like to present a naive approach to an an-exact expression for the first-passage-time distribution, which agrees surprisingly well with numerical simulations. This expression will be exact in the case that the reset potential is of the same magnitude as the mean input: \(v_r = -\mu\). Considering a neuron driven by a specifically coloured noise, depending on the membrane time-constant \(\tau\):
+        Here however, I would like to present a naive approach to an an-exact expression of the first-passage-time distribution which agrees surprisingly well with numerical simulations. This expression will be exact in the case that the reset potential is the additive inverse of the mean input: \(v_r = -\mu\). Considering a neuron driven by a specifically coloured noise, depending on the membrane time-constant \(\tau\):
             $$ \eta(t) = W(t) + \tau dW_t, $$
             where \(W(t) = \int_0^t dW_t\).
-        Defining \(k = \tau^{-1}\) for notational convenience, equation <a href="#mxj-eq-1">(1)</a> becomes:
+        Defining \(k = \tau^{-1}\) for notational convenience, equation <a href="#mjx-eqn-1">(1)</a> becomes:
             $$ dv = k(\mu-v) dt + \sigma ( kW dt + dW_t). \tag{3}$$
 
-        Shifting the membrane potential in order to remove the \(\mu\) term (thus \(x := v-\mu\), \(x_c := v_c-\mu\) & \(x_r := v_r-\mu\), and Laplace transforming <a href="#mxj-eq-3">(3)</a> leads to:
+        Shifting the membrane potential in order to remove the \(\mu\) term (thus \(x := v-\mu\), \(x_c := v_c-\mu\) & \(x_r := v_r-\mu\), and Laplace transforming <a href="#mjx-eqn-3">(3)</a> leads to:
             $$ (k+s)\widetilde{x} = \sigma (k+s)\widetilde{W} + x(0). $$
         Dividing both sides by \((k+s)\), applying the inverse Laplace transform, and differentiating gives:
             $$ dx = \sigma dW_t - kx(0) e^{-kt} dt, $$
-        which describes a Brownian motion (perfect integrate-and-fire neuron) with an exponential driving. Since the leaky integrate-and-fire neuron gets completely reset after a spike occurs, and we are interested in the inter-spike interval distribution, we can set \(x(0) = x_r\).
+        which describes a Brownian motion (perfect integrate-and-fire neuron) with an exponential driving. Since the leaky integrate-and-fire neuron gets completely reset after a spike occurs and we are interested in the inter-spike interval distribution we can set \(x(0) = x_r\).
         </p>
-        <p>
-            The evolution of the probability density of membrane potentials \(P\) is described by the Fokker-Planck equation
-                $$ \frac{\partial P}{\partial t} = kx_r e^{-kt} \frac{\partial P}{\partial x} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial x^2}. $$
-            By disregarding for the moment the spike-and-reset mechanism (or equivalently setting \(x_c = \infty\)), 
+        <h4 style="margin-bottom:0">Natural diffusion</h4>
+        <p style="margin-top:0">
+            The evolution of the probability density of the membrane potential \(P(x,t)\) is described by the Fokker-Planck equation
+                $$ \frac{\partial P}{\partial t} = kx_r e^{-kt} \frac{\partial P}{\partial x} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial x^2}, \tag{4} $$
+            with the initial condition \(P(x,0) = \delta(x-x_r) \) and Dirichlet boundary \(P(x_c, t) = 0\).
+            By disregarding for the moment the spike-and-reset mechanism (or equivalently setting \(x_c = \infty\)) we can solve for \(P\):
+                $$ P(x,t) = \frac{1}{\sqrt{2\pi\sigma^2t}} \exp{\left[ -\frac{(x-x_re^{-kt})^2}{2\sigma^2t}\right]}, $$
+            finding that \(P(x,t)\) is a Gaussian with time-dependent variance \(\sigma^2t\) and mean \(x_re^{-kt}\).
+            Unfortunately, when enforcing the spike-and-reset mechanism (i.e. \(x_c < \infty)\), no solution has (so far) been found for general cases.
+        </p>
+        <h4 style="margin-bottom:0">Perfect IF neuron</h4>
+        <p style="margin-top:0">
+            For the perfect integrate-and-fire neuron the Fokker-Planck equation <a href="#mjx-eqn-4">(4)</a> does not have the drift term \(kx_re^{-kt}\frac{\partial P}{\partial x}\), and thus has a natural solution
+                $$ P(x,t) = \frac{1}{\sqrt{2\pi\sigma^2t}}exp{\left[-\frac{(x-x_r)^2}{2\sigma^2t}  \right]}. $$
+            The absence of the time-dependent mean makes it possible to construct a solution with the boundary \(P(x_c,t)=0\) by using the method of images
+                $$ P_c(x,t) = \frac{1}{\sqrt{2\pi\sigma^2t}}\left(exp{\left[-\frac{(x-x_r)^2}{2\sigma^2t}\right]} - exp{\left[-\frac{(x-2x_c+x_r)^2}{2\sigma^2t}\right]}  \right), \tag{5}$$
+            thus a solution by the superposition of the natural solution and a virtual 'sink' outside the considered domain \([\infty, x_c)\). This solution can be verified by checking that \(P_c(x,t)\rvert_{x=x_c}\) = 0, \(P_c(x,t)\rvert_{t=0}=\delta(x-x_r)\) and that \(P_c\) solves the Fokker-Planck equation <a href="#mjx-eqn-4">(4)</a>.
+        </p>
+        <h4 style="margin-bottom:0">Return to the leaky IF neuron</h4>
+        <p style="margin-top:0">
+            Naively, one would try to apply the method of images also to solve <a href="#mjx-eqn-4">(4)</a>, trying to equivalently to subtract a mirror distribution with an inverted mean:
+                $$ \hat{P}_c(x,t) = \frac{1}{\sqrt{2\pi\sigma^2t}}\left( \exp{\left[ -\frac{(x-x_re^{-kt})^2}{2\sigma^2t}\right]} - \exp{\left[ -\frac{(x-2xc+x_re^{-kt})^2}{2\sigma^2t}\right]} \right), \tag{6}$$
+        which complies with \(\hat{P}_c(x,t)\rvert_{x=xc}=0\) and \(\hat{P}_c(x,t)\rvert_{t=0}=\delta(x-x_r)\), for \(x < x_c\). But crucially (in general) does <i>not</i> solve the Fokker-Planck equation <a href="#mjx-eqn-4">(4)</a>. In section <a href="#exact_cases">Special cases with exact expressions</a> I list some cases in which <a href="#mjx-eqn-6">(6)</a> <i>is</i> an exact solution.
+        </p>
+        <h4 style="margin-bottom:0">FTP distribution</h4>
+        <p style="margin-top:0">
+            Continuing naively with the membrane voltage distribution of <a href="#mjx-eqn-6">(6)</a>, by integrating over possible values of \(x\) we find the probability distribution that at time \(t\) a neuron has not yet fired:
+                $$
+                    S(t)    =  \int_{-\infty}^{x_c}\hat{P}_c(x,t)dx
+                            =  -erf\left(-\frac{x_{th}-x_0e^{-kt}}{\sqrt{2\sigma^2t}}\right), \tag{7}
+                $$
+            then \(1-S(t)\) is the probability that a neuron has fired some time before \(t\). Changes in \(1-S(t)\) with respect to time then relate to the probability of the timings of threshold crossings. The first-passage-time distribution is then the time-derivative of \(1-S(t)\):
+                $$ f(t) = \frac{\partial}{\partial t} \left[1-S(t)\right] = \left[ \frac{\lvert x_{th}-x_0e^{-kt}\rvert}{\sqrt{2\pi\sigma^2t^3}} - \frac{2kx_0e^{-kt}}{\sqrt{2\pi\sigma^2t}} \right] exp\left(-\frac{(x_{th}-x_0e^{-kt})^2}{2\sigma^2t}\right). \tag{8} $$
+            Thus the first-passage-time distribution is the superposition of a <a href="en.wikipedia.org/wiki/Lévy_distribution">L&eacute;vy distribution</a> with a gaussian.
         </p>
 
+        <h3 style="margin-bottom:0" id="exact_cases">Special cases with exact expressions</h3>
+        <p style="margin-top:0">
+            Using <a href="#mjx-eqn-6">(6)</a> there are some cases in which it is an exact solution to the Fokker-Planck equation. In this section I list two.
+            <h4 style="margin-bottom:0">Reflection around \(x_c=0\)</h4>
+            <p style="margin-top:0">
+            </p>
+            <h4 style="margin-bottom:0">Perfect IF \(x_r=-\mu\)</h4>
+            <p style="margin-top:0">
+                Clearly, in case \(x_r = 0\) (\(v_r=-\mu\)), <a href="#mjx-eqn-6">(6)</a> is equal to <a href="#mjx-eqn-5">(5)</a>, and thus is an exact solution to the Fokker-Planck equation <a href="#mjx-eqn-4">(4)</a>.
+            </p>
+        </p>
+        <h3 style="margin-bottom:0">Steps towards an exact expression</h3>
+        <p style="margin-top:0">
+            Plugging \(\hat{P}_c\) into <a href="#mjx-eqn-4">(4)</a> leads to the equation
+                $$ \frac{\partial \hat{P}_c}{\partial t} - kx_re^{-kt}\frac{\partial \hat{P}_c}{\partial x} - \frac{\sigma^2}{2}\frac{\partial^2 \hat{P}_c}{\partial x^2} = -2\frac{(-x+2x_c-x_re^{-kt})^2}{\sigma^2t}\hat{P}_c. \tag{7}$$
+        </p>
         <h3 style="margin-bottom:0">References:</h3>
         <ul>
             <li>Gerstein, G.L., & Mandelbrot, B. (1964). <i>Random walk models for the spike activity of a single neuron.</i> Biophy. j., 4(1), 41-68.</li>
