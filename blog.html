@@ -89,28 +89,67 @@
             Continuing naively with the membrane voltage distribution of <a href="#mjx-eqn-6">(6)</a>, by integrating over possible values of \(x\) we find the probability distribution that at time \(t\) a neuron has not yet fired:
                 $$
                     S(t)    =  \int_{-\infty}^{x_c}\hat{P}_c(x,t)dx
-                            =  -erf\left(-\frac{x_{th}-x_0e^{-kt}}{\sqrt{2\sigma^2t}}\right), \tag{7}
+                            =  -erf\left(-\frac{x_c-x_re^{-kt}}{\sqrt{2\sigma^2t}}\right), \tag{7}
                 $$
             then \(1-S(t)\) is the probability that a neuron has fired some time before \(t\). Changes in \(1-S(t)\) with respect to time then relate to the probability of the timings of threshold crossings. The first-passage-time distribution is then the time-derivative of \(1-S(t)\):
-                $$ f(t) = \frac{\partial}{\partial t} \left[1-S(t)\right] = \left[ \frac{\lvert x_{th}-x_0e^{-kt}\rvert}{\sqrt{2\pi\sigma^2t^3}} - \frac{2kx_0e^{-kt}}{\sqrt{2\pi\sigma^2t}} \right] exp\left(-\frac{(x_{th}-x_0e^{-kt})^2}{2\sigma^2t}\right). \tag{8} $$
-            Thus the first-passage-time distribution is the superposition of a <a href="en.wikipedia.org/wiki/Lévy_distribution">L&eacute;vy distribution</a> with a gaussian.
+                $$ f(t) = \frac{\partial}{\partial t} \left[1-S(t)\right] = \left[ \frac{\lvert x_c-x_re^{-kt}\rvert}{\sqrt{2\pi\sigma^2t^3}} - \frac{2kx_re^{-kt}}{\sqrt{2\pi\sigma^2t}} \right] exp\left(-\frac{(x_c-x_re^{-kt})^2}{2\sigma^2t}\right). \tag{8} $$
+            Thus the first-passage-time distribution is the superposition of a <a href="en.wikipedia.org/wiki/Lévy_distribution">L&eacute;vy distribution</a> with the product of a decaying exponential and a gaussian.
         </p>
+        <p>
+            The following figure shows the first-passage-time distribution and measured histograms for several different values of \(k=\tau^{-1}\), for \(x_r=-3\) and \(x_c = 1\).
+            <figure>
+                <img src="fpt.jpg" alt="fpt_image" style="max-width:100%;max-height:100vh;margin:auto">
+                <figcaption>Fig.01: <b>First-passage-time distributions and histograms</b> for several values of \(k=\tau^{-1}\). The remaining parameters are \(x_r=-3\) and \(x_c=1\). The measured histograms are the result of numerical simulation of \(1e4\) neurons carried out untill \(1e6\) time-steps</figcaption>
+            </figure>
+        </p>
+        
 
         <h3 style="margin-bottom:0" id="exact_cases">Special cases with exact expressions</h3>
         <p style="margin-top:0">
-            Using <a href="#mjx-eqn-6">(6)</a> there are some cases in which it is an exact solution to the Fokker-Planck equation. In this section I list two.
-            <h4 style="margin-bottom:0">Reflection around \(x_c=0\)</h4>
-            <p style="margin-top:0">
-            </p>
+            There are some cases in which <a href="#mjx-eqn-6">(6)</a> is an exact solution to the Fokker-Planck equation. In this section I list two.
             <h4 style="margin-bottom:0">Perfect IF \(x_r=-\mu\)</h4>
             <p style="margin-top:0">
-                Clearly, in case \(x_r = 0\) (\(v_r=-\mu\)), <a href="#mjx-eqn-6">(6)</a> is equal to <a href="#mjx-eqn-5">(5)</a>, and thus is an exact solution to the Fokker-Planck equation <a href="#mjx-eqn-4">(4)</a>.
+                This case was already alluded to in the introduction. Clearly, in case \(x_r = 0\) (thus \(v_r=-\mu\)), the evolution of the membrane potential distribution of the leaky integrate-and-fire neuron <a href="#mjx-eqn-6">(6)</a> is equal to that of the perfect integrate-and-fire neuron <a href="#mjx-eqn-5">(5)</a>, and thus in this case <a href="#mjx-eqn-6">(6)</a> is an exact solution to the Fokker-Planck equation <a href="#mjx-eqn-4">(4)</a>.
+            </p>
+            <p>
+                The first-passage-time distribution is then given by
+                $$ f(t) = \frac{\lvert x_c \rvert}{\sqrt{2\pi\sigma^2t}}\exp{\left[-\frac{x_c^2}{2\sigma^2t}\right]}. $$
+            <figure>
+                <img src="pIFfpt.jpg" alt="pIFfpt_image" style="max-width:100%;max-height:100vh;margin:auto">
+                <figcaption>Fig.02: <b>First-passage-time distributions and histograms</b> for the perfect integrate-and-fire neuron (equivalently for the leaky integrate-and-fire neuron) for \(x_r=-\mu\), for different values of \(k=\tau^{-1}\). The threshold is set at \(x_c=0.2\). The measured histograms are the result of numerical simulation of \(1e4\) neurons carried out untill \(1e6\) time-steps</figcaption>
+            </figure>
+            </p>
+            <h4 style="margin-bottom:0">Reflection around \(x_c=0\)</h4>
+            <p style="margin-top:0">
+                If we carry out a change of variables \(y:=\lvert x \rvert\) in <a href="#mjx-eqn-4">(4)</a>, the Fokker-Plank equation for the membrane potential density becomes:
+                <!--
+                $$ 
+                    \begin{align}
+                        \frac{\partial P}{\partial t} &= -kx_re^{-kt}\frac{\partial P}{\partial y} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial y^2}, & x<0 \tag{9aa} \\
+                        \frac{\partial P}{\partial t} &= kx_re^{-kt}\frac{\partial P}{\partial y} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial y^2}, & x\geq 0, \tag{9bb}
+                    \end{align}
+                $$
+                -->
+                $$ 
+                        \frac{\partial P}{\partial t} = \begin{cases}
+                            -kx_re^{-kt}\frac{\partial P}{\partial y} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial y^2}, & x<0  \\
+                            kx_re^{-kt}\frac{\partial P}{\partial y} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial y^2}, & x\geq 0, 
+                    \end{cases}\tag{9}
+                $$
+                
+                then by setting \(x_c=0\), 
+                $$ P(x,t) = \frac{1}{\sqrt{2\pi\sigma^2t}}\left( \Theta(-x) \exp{\left[ -\frac{(\lvert x \rvert+ x_re^{-kt})^2}{2\sigma^2t}\right]} - \Theta(x)\exp{\left[ -\frac{(\lvert x \rvert - x_re^{-kt})^2}{2\sigma^2t}\right]} \right) $$
+                solves <a href="#mjx-eqn-9">(9)</a>. Notice that this solution is equivalent to <a href="#mjx-eqn-6">(6)</a> for a sufficiently small variance.
+            </p>
+            <p>
+                Integrating over \(x\)
+                $$ S(t) = \int_{-\infty}^0 P(x,t)dx = \frac{1}{\sqrt{2\pi\sigma^2t}}\left( \int_{-\infty}^0 \exp{\left[ -\frac{-(-x+x_re^{-kt})^2}{2\sigma^2t} \right]}dx - \exp{\left[-\frac{(x_re^{-kt})^2}{2\sigma^2t} \right]}\right)$$
             </p>
         </p>
-        <h3 style="margin-bottom:0">Steps towards an exact expression</h3>
+        <h3 style="margin-bottom:0">A1: Steps towards an exact expression</h3>
         <p style="margin-top:0">
             Plugging \(\hat{P}_c\) into <a href="#mjx-eqn-4">(4)</a> leads to the equation
-                $$ \frac{\partial \hat{P}_c}{\partial t} - kx_re^{-kt}\frac{\partial \hat{P}_c}{\partial x} - \frac{\sigma^2}{2}\frac{\partial^2 \hat{P}_c}{\partial x^2} = -2\frac{(-x+2x_c-x_re^{-kt})^2}{\sigma^2t}\hat{P}_c. \tag{7}$$
+                $$ \frac{\partial \hat{P}_c}{\partial t} - kx_re^{-kt}\frac{\partial \hat{P}_c}{\partial x} - \frac{\sigma^2}{2}\frac{\partial^2 \hat{P}_c}{\partial x^2} = -2\frac{(-x+2x_c-x_re^{-kt})^2}{\sigma^2t}\hat{P}_c. \tag{A1}$$
         </p>
         <h3 style="margin-bottom:0">References:</h3>
         <ul>
