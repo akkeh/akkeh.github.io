@@ -2,7 +2,9 @@
 <html>
 <head>
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<title>Bliki</title>
+	<title>Blog</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body onload="loadMenu()">
 	<header>
@@ -15,11 +17,62 @@
         <p>A collection of short essays about several topics that interest me. Among others I write about my main interest: theoretical neuroscience and its connection to other topics such as philosophy. biotechnology, biology, society, computers and politics. Besides that I will include short snippets of code and small 'tutorials' on techniques that interest me.
         </p>
         <hr style="height:1px;background-color:black"><br><br>
-        <h2 style="margin:1; margin-bottom:0"><span style="font-weight:normal">20200915</span>First-passage-time-distribution of leaky IF neuron</h2>
+        <h2 style="margin:1; margin-bottom:0"><span style="font-weight:normal">20200915</span> First-passage-time distribution of leaky IF neuron</h2>
         <i>First-passage-time; Inter-spike-interval; leaky IF neuron</i>
         <p>
-            Historically the rate of firing of neurons has been used as the primary measure for the functioning of neurons. Especially with the possibility to record the activity of single neurons many studies have been carried out to quantify the rate of firing of single neurons in response to particular stimuli. However, neurons are 'noisy', and so these experiments result in the measurement of an inter-spike-interval histogram of a neuron. 
+            Historically the rate of firing of neurons has been used as the primary measure for the functioning of neurons. Especially with the possibility to record the activity of single neurons many studies have been carried out to quantify the rate of firing of single neurons in response to particular stimuli. However neurons are 'noisy', and so these experiments typically result in a distribution of inter-spike times, called 'inter-spike-interval histogram', of a neuron. 
         </p>
+        <p>
+            A widely used model of a single neuron is the leaky integrate-and-fire neuron, originally introduced by Lapicque in 1907. This abstract model consists of a description of the evolution of a membrane voltage \(v\) of a neuron, driven by an input \(I\):
+                $$ \tau \dot{v} = I-v. \tag{1} $$
+            The parameter \(\tau\) is the membrane time-constant and determines how fast the membrane potential follows changes in steady state inputs, and how fast the potential decays back to its steady state after a perturbation. 
+            The second component of the leaky intergrate-and-fire neuron is a spike-and-reset rule: if the potential reaches a threshold value \(v \leq v_c\) it is reset to a value \(v_r < v_c\), whereafter its evolution is again governed by <a href="#mjx-eqn-1">(1)</a>. The firing rate of the leaky intergrate-and-fire neuron can thus be determined from the time it takes between consecutive spike-and-resets.
+        </p>
+        <h3 style="margin-bottom:0">Deterministic, constant input</h3>
+        <p style="margin-top:0">
+        	For constant inputs \(I(t) = \bar{I}\), the membrane potential shows an exponential approach to the value \( v_\infty = \bar{I} \). In the case of a constant supra-threshold input \( \bar{I}>v_c \) it is straightforward to calculate the firing rate of the model neuron:
+		$$ T_{isi} = -\tau ln\left(\frac{v_c-\bar{I}}{v_r-\bar{I}}\right). $$
+        </p> 
+        <h3 style="margin-bottom:0">Stochastic input</h3>
+        <p style="margin-top:0">
+        	However, as stated before, neurons are generally considered to be noisy. This noisiness can be captured by considering an input
+        		$$ I(t) = \mu + \sigma \eta(t), $$
+	        in which \(\mu\) is a steady state (mean) input, and \(\eta(t)\) is a fluctuating noise input. With this input <a href="#mjx-eqn-1">(1)</a> describes a stochastic differential equation (SDE). A classical problem is to describe the distributions of times that such a process crosses a threshold value, called the first-passage-time (FPT) distribution of said process. In the case that the noise part of the input is taken to be a gaussian white noise \(\eta(t) = dW_t\), the membrane potential follows an Ornstein-Uhlenbeck process. The exact description of the first-passage-time distribution (the 'first-passage-time problem') of Ornstein-Uhlenbeck type processes is, however, still an unsolved problem.
+    	</p>
+        <p>
+            It will thus in general not be possible to obtain an exact expression for the first-passage-time distribution of the leaky integrate-and-fire neuron. 
+            Gerstein and Mandelbrot (1964) considered the first-passage-time distribution of the perfect integrate-and-fire neuron, which is equal to the leaky integrate-and-fire neuron, but without the exponential drive back to a resting potential (i.e. <a href="#mxj-eq-1">(1)</a> without the \(-v\) term on the r.h.s.). In this case the membrane potential describes a biased Brownian motion, for which exact descriptions of the first-passage-time distribution are known.
+        </p>
+        <p>
+        However, an important characteristic of neuronal membrane potentials is the relaxation to a resting potential in absence of input (Gluss, 1967). Steps have been made towards the expression of the first-passage-time distribution of the leaky intergrate-and-fire neuron. Exact expression exist for restricted sets of parameters (Siebert, 1969; Sugiyama, Moore & Perkel, 1970), in Laplace transformed form (Roy & Smith, 1969; Sugiyama, Moore & Perkel, 1970, Capocelli & Ricciardi, 1971), as well as by approximation (Swalger & Schimansky-Geier, 2008).
+        </p>
+        <h3 style="margin-bottom:0">A naive and an-exact FPT distribution</h3>
+        <p style="margin-top:0">
+        Here however, I would like to present a naive approach to an an-exact expression for the first-passage-time distribution, which agrees surprisingly well with numerical simulations. This expression will be exact in the case that the reset potential is of the same magnitude as the mean input: \(v_r = -\mu\). Considering a neuron driven by a specifically coloured noise, depending on the membrane time-constant \(\tau\):
+            $$ \eta(t) = W(t) + \tau dW_t, $$
+            where \(W(t) = \int_0^t dW_t\).
+        Defining \(k = \tau^{-1}\) for notational convenience, equation <a href="#mxj-eq-1">(1)</a> becomes:
+            $$ dv = k(\mu-v) dt + \sigma ( kW dt + dW_t). \tag{3}$$
+
+        Shifting the membrane potential in order to remove the \(\mu\) term (thus \(x := v-\mu\), \(x_c := v_c-\mu\) & \(x_r := v_r-\mu\), and Laplace transforming <a href="#mxj-eq-3">(3)</a> leads to:
+            $$ (k+s)\widetilde{x} = \sigma (k+s)\widetilde{W} + x(0). $$
+        Dividing both sides by \((k+s)\), applying the inverse Laplace transform, and differentiating gives:
+            $$ dx = \sigma dW_t - kx(0) e^{-kt} dt, $$
+        which describes a Brownian motion (perfect integrate-and-fire neuron) with an exponential driving. Since the leaky integrate-and-fire neuron gets completely reset after a spike occurs, and we are interested in the inter-spike interval distribution, we can set \(x(0) = x_r\).
+        </p>
+        <p>
+            The evolution of the probability density of membrane potentials \(P\) is described by the Fokker-Planck equation
+                $$ \frac{\partial P}{\partial t} = kx_r e^{-kt} \frac{\partial P}{\partial x} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial x^2}. $$
+            By disregarding for the moment the spike-and-reset mechanism (or equivalently setting \(x_c = \infty\)), 
+        </p>
+
+        <h3 style="margin-bottom:0">References:</h3>
+        <ul>
+            <li>Gerstein, G.L., & Mandelbrot, B. (1964). <i>Random walk models for the spike activity of a single neuron.</i> Biophy. j., 4(1), 41-68.</li>
+            <li>Gluss, B. (1967). <i>A model for neuron firing with exponential decay of potential resulting in diffusion equations for probability density.</i> Bull. math. biophys., 29(2), 233-243.</li>
+            <li> Lapicque, L. (1907). <i>Recherches quantitatives sur l'excitation &eacute;lectrique des nerfs trait&eacute;e comme une polarisation.</i> J. physiol. pathol. gen., 9, 620-635
+            <!--- <li> Brunel, N., & Van Rossum, M.C. (2007). <i>Lapicque's 1907 paper: from frogs to integrate-and-fire.</i> Biol. cybern., 97(5-6), 337-339. </li> --->
+        </ul>
 <!---
 <h2 style="margin:1; margin-bottom:0"><span style="font-weight:normal">20190404 </span>Materialist introduction
 </h2>
