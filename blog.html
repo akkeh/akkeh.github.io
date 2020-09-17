@@ -126,7 +126,7 @@
             </figure>
         </p>
         
-
+<!---
         <h3 id="exact_cases">Special cases with exact expressions</h3>
         <p style="margin-top:0">
             There are some cases in which <a href="#mjx-eqn-6">(6)</a> is an exact solution to the Fokker-Planck equation. In this section I list two.
@@ -145,14 +145,6 @@
             <h4 style="margin-bottom:0">Reflection around \(x_c=0\)</h4>
             <p style="margin-top:0">
                 If we carry out a change of variables \(y:=\lvert x \rvert\) in <a href="#mjx-eqn-4">(4)</a>, the Fokker-Plank equation for the membrane potential density becomes:
-                <!--
-                $$ 
-                    \begin{align}
-                        \frac{\partial P}{\partial t} &= -kx_re^{-kt}\frac{\partial P}{\partial y} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial y^2}, & x<0 \tag{9aa} \\
-                        \frac{\partial P}{\partial t} &= kx_re^{-kt}\frac{\partial P}{\partial y} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial y^2}, & x\geq 0, \tag{9bb}
-                    \end{align}
-                $$
-                -->
                 $$ 
                         \frac{\partial P}{\partial t} = \begin{cases}
                             -kx_re^{-kt}\frac{\partial P}{\partial y} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial y^2}, & x<0  \\
@@ -162,11 +154,17 @@
                 
                 then by setting \(x_c=0\), 
                 $$ P(x,t) = \frac{1}{\sqrt{2\pi\sigma^2t}}\left( \Theta(-x) \exp{\left[ -\frac{(\lvert x \rvert+ x_re^{-kt})^2}{2\sigma^2t}\right]} - \Theta(x)\exp{\left[ -\frac{(\lvert x \rvert - x_re^{-kt})^2}{2\sigma^2t}\right]} \right) $$
-                solves <a href="#mjx-eqn-9">(9)</a>. Notice that this solution is equivalent to <a href="#mjx-eqn-6">(6)</a> for a sufficiently small variance.
+                solves <a href="#mjx-eqn-9">(9)</a>. Notice that this solution is equivalent to <a href="#mjx-eqn-6">(6)</a>.
             </p>
             <p>
-                Integrating over \(x\)
-                $$ S(t) = \int_{-\infty}^0 P(x,t)dx = \frac{1}{\sqrt{2\pi\sigma^2t}}\left( \int_{-\infty}^0 \exp{\left[ -\frac{-(-x+x_re^{-kt})^2}{2\sigma^2t} \right]}dx - \exp{\left[-\frac{(x_re^{-kt})^2}{2\sigma^2t} \right]}\right)$$
+                Integrating over \(x\) leads to the survival probability
+                $$ \begin{align} 
+                    S(t)    &= \int_{-\infty}^0 P(x,t)dx\\
+                            &= \frac{1}{\sqrt{2\pi\sigma^2t}}\left( \int_{-\infty}^0 \exp{\left[ -\frac{-(-x+x_re^{-kt})^2}{2\sigma^2t} \right]}dx - \int_{-\infty}^0\delta(x)\exp{\left[-\frac{(x_re^{-kt})^2}{2\sigma^2t} \right]}dx\right) \\
+                            &= \frac{1}{2}-\frac{1}{2}erf\left(\frac{x_re^{-kt}}{\sqrt{2\sigma^2t}}\right) - \frac{1}{\sqrt{2\pi\sigma^2t}}\exp{\left[-\frac{x_r^2e^{-2kt}}{2\sigma^2t} \right]}. \tag{10}
+                \end{align}
+                $$
+            
             </p>
         </p>
         <h3>Steps towards an exact expression</h3>
@@ -174,11 +172,20 @@
             Plugging \(\hat{P}_c\) into <a href="#mjx-eqn-4">(4)</a> leads to the equation
                 $$ \frac{\partial \hat{P}_c}{\partial t} - kx_re^{-kt}\frac{\partial \hat{P}_c}{\partial x} - \frac{\sigma^2}{2}\frac{\partial^2 \hat{P}_c}{\partial x^2} = -2\frac{(-x+2x_c-x_re^{-kt})^2}{\sigma^2t}\hat{P}_c. \tag{A1}$$
         </p>
+--->
         <h3>References:</h3>
         <ul>
+            <li>Capocelli, R.M., & Ricciardi, L.M. (1971). <i>Diffusion approximation and first passage time problem for a model neuron</i>. Kybernetik, 8(6), 214-223.</li>
             <li>Gerstein, G.L., & Mandelbrot, B. (1964). <i>Random walk models for the spike activity of a single neuron.</i> Biophy. j., 4(1), 41-68.</li>
             <li>Gluss, B. (1967). <i>A model for neuron firing with exponential decay of potential resulting in diffusion equations for probability density.</i> Bull. math. biophys., 29(2), 233-243.</li>
-            <li> Lapicque, L. (1907). <i>Recherches quantitatives sur l'excitation &eacute;lectrique des nerfs trait&eacute;e comme une polarisation.</i> J. physiol. pathol. gen., 9, 620-635
+            <li> Lapicque, L. (1907). <i>Recherches quantitatives sur l'excitation &eacute;lectrique des nerfs trait&eacute;e comme une polarisation.</i> J. physiol. pathol. gen., 9, 620-635</li>
+            <li>Roy, B.K., & Smith, D.R. (1969). <i>Analysis of the exponential decay model of the neuron showing frequency threshold effects</i>. Bull. math. biophys., 31(2), 341-357.</li>
+            <li>Schwalger, T., & Schimansky-Geier, L. (2008). <i>Interspike interval statistics of a leaky integrate-and-fire neuron driven by Gaussian noise with large correlation times</i>. Phys. rev. E, 77(3), 031914.</li>
+            <li>Siebert, W.M. (1969). <i>On stochastic neural models of the diffusion type</i>. Mass. instit. technol. res. lab. electron. quart. tech. rep, 94, 281-287.</li>
+            <li>Sugiyama, H., Moore, G.P., & Perkel, D.H. (1970). <i>Solutions for a stochastic model of neuronal spike production.</i> Math. biosci., 8(3-4), 323-341.</li>
+
+
+
             <!--- <li> Brunel, N., & Van Rossum, M.C. (2007). <i>Lapicque's 1907 paper: from frogs to integrate-and-fire.</i> Biol. cybern., 97(5-6), 337-339. </li> --->
         </ul>
 <!---
