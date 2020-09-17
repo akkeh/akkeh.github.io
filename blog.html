@@ -5,6 +5,29 @@
 	<title>Blog</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { counter-reset: h3counter; }
+        h2 { 
+            margin:1; 
+            margin-bottom:0;
+            counter-reset: h3counter; 
+        }
+        h3:before {
+            content: counter(h3counter) ".\0000a0";
+            counter-increment: h3counter;
+        }
+        h3 {
+            margin-bottom:0;
+            counter-reset: h4counter;
+        }
+        h4:before {
+            content: counter(h3counter) "." counter(h4counter) ".\0000a0";
+            counter-increment: h4counter;
+        }
+        h4 {
+            margin-bottom:0;
+        }
+    </style>
 </head>
 <body onload="loadMenu()">
 	<header>
@@ -17,7 +40,7 @@
         <p>A collection of short essays about several topics that interest me. I write about my main interest: theoretical neuroscience, and its connection to other topics such as philosophy. biotechnology, biology, society, computers and politics. Besides that I will include short snippets of code and small 'tutorials' on techniques that interest me.
         </p>
         <hr style="height:1px;background-color:black"><br><br>
-        <h2 style="margin:1; margin-bottom:0"><span style="font-weight:normal">20200915</span> First-passage-time distribution of leaky IF neuron</h2>
+        <h2><span style="font-weight:normal">20200915</span> First-passage-time distribution of leaky IF neuron</h2>
         <i>First-passage-time; Inter-spike-interval; leaky IF neuron</i>
         <p>
             Historically the rate of firing of neurons has been used as the primary measure for the functioning of neurons. Especially with the possibility to record the activity of single neurons many studies have been carried out to quantify the rate of firing of single neurons in response to particular stimuli. However neurons are 'noisy', and so these experiments typically result in a distribution of inter-spike times, called 'inter-spike-interval histogram', of a neuron. 
@@ -28,12 +51,12 @@
             The parameter \(\tau\) is the membrane time-constant and determines how fast the membrane potential follows changes in steady state inputs, and how fast the potential decays back to its steady state after a perturbation. 
             The second component of the leaky integrate-and-fire neuron is a spike-and-reset rule: if the potential reaches a threshold value \(v \leq v_c\) it is reset to a value \(v_r < v_c\), whereafter its evolution is again governed by <a href="#mjx-eqn-1">(1)</a>. The firing rate of the leaky integrate-and-fire neuron can thus be determined from the time it takes between consecutive spike-and-resets. In this post I will look at the expression of the inter-spike-interval distribution of the leaky integrate-and-fire neuron.
         </p>
-        <h3 style="margin-bottom:0">Deterministic constant input</h3>
+        <h3>Deterministic constant input</h3>
         <p style="margin-top:0">
         	For constant inputs \(I(t) = \bar{I}\), the membrane potential shows an exponential approach to the value \( v_\infty = \bar{I} \). In the case of a constant supra-threshold input \( \bar{I}>v_c \) it is straightforward to calculate the firing rate of the model neuron:
 		$$ T_{isi} = -\tau ln\left(\frac{v_c-\bar{I}}{v_r-\bar{I}}\right). $$
         </p> 
-        <h3 style="margin-bottom:0">Stochastic input</h3>
+        <h3>Stochastic input</h3>
         <p style="margin-top:0">
         	However, as stated before, neurons are generally considered to be noisy. This noisiness can be captured by considering an input
         		$$ I(t) = \mu + \sigma \eta(t), $$
@@ -60,7 +83,7 @@
             $$ dx = \sigma dW_t - kx(0) e^{-kt} dt, $$
         which describes a Brownian motion (perfect integrate-and-fire neuron) with an exponential driving. Since the leaky integrate-and-fire neuron gets completely reset after a spike occurs and we are interested in the inter-spike interval distribution we can set \(x(0) = x_r\).
         </p>
-        <h4 style="margin-bottom:0">Natural diffusion</h4>
+        <h4>Natural diffusion</h4>
         <p style="margin-top:0">
             The evolution of the probability density of the membrane potential \(P(x,t)\) is described by the Fokker-Planck equation
                 $$ \frac{\partial P}{\partial t} = kx_r e^{-kt} \frac{\partial P}{\partial x} + \frac{\sigma^2}{2}\frac{\partial^2 P}{\partial x^2}, \tag{4} $$
@@ -70,7 +93,7 @@
             finding that \(P(x,t)\) is a Gaussian with time-dependent variance \(\sigma^2t\) and mean \(x_re^{-kt}\).
             Unfortunately, when enforcing the spike-and-reset mechanism (i.e. \(x_c < \infty)\), no solution has (so far) been found for general cases.
         </p>
-        <h4 style="margin-bottom:0">Perfect IF neuron</h4>
+        <h4>Perfect IF neuron</h4>
         <p style="margin-top:0">
             For the perfect integrate-and-fire neuron the Fokker-Planck equation <a href="#mjx-eqn-4">(4)</a> does not have the drift term \(kx_re^{-kt}\frac{\partial P}{\partial x}\), and thus has a natural solution
                 $$ P(x,t) = \frac{1}{\sqrt{2\pi\sigma^2t}}exp{\left[-\frac{(x-x_r)^2}{2\sigma^2t}  \right]}. $$
@@ -78,13 +101,13 @@
                 $$ P_c(x,t) = \frac{1}{\sqrt{2\pi\sigma^2t}}\left(exp{\left[-\frac{(x-x_r)^2}{2\sigma^2t}\right]} - exp{\left[-\frac{(x-2x_c+x_r)^2}{2\sigma^2t}\right]}  \right), \tag{5}$$
             thus a solution by the superposition of the natural solution and a virtual 'sink' outside the considered domain \([\infty, x_c)\). This solution can be verified by checking that \(P_c(x,t)\rvert_{x=x_c}\) = 0, \(P_c(x,t)\rvert_{t=0}=\delta(x-x_r)\) and that \(P_c\) solves the Fokker-Planck equation <a href="#mjx-eqn-4">(4)</a>.
         </p>
-        <h4 style="margin-bottom:0">Return to the leaky IF neuron</h4>
+        <h4>Return to the leaky IF neuron</h4>
         <p style="margin-top:0">
             Naively, one would try to apply the method of images also to solve <a href="#mjx-eqn-4">(4)</a>, trying to equivalently to subtract a mirror distribution with an inverted mean:
                 $$ \hat{P}_c(x,t) = \frac{1}{\sqrt{2\pi\sigma^2t}}\left( \exp{\left[ -\frac{(x-x_re^{-kt})^2}{2\sigma^2t}\right]} - \exp{\left[ -\frac{(x-2xc+x_re^{-kt})^2}{2\sigma^2t}\right]} \right), \tag{6}$$
         which complies with \(\hat{P}_c(x,t)\rvert_{x=xc}=0\) and \(\hat{P}_c(x,t)\rvert_{t=0}=\delta(x-x_r)\), for \(x < x_c\). But crucially (in general) does <i>not</i> solve the Fokker-Planck equation <a href="#mjx-eqn-4">(4)</a>. In section <a href="#exact_cases">Special cases with exact expressions</a> I list some cases in which <a href="#mjx-eqn-6">(6)</a> <i>is</i> an exact solution.
         </p>
-        <h4 style="margin-bottom:0">FTP distribution</h4>
+        <h4>FTP distribution</h4>
         <p style="margin-top:0">
             Continuing naively with the membrane voltage distribution of <a href="#mjx-eqn-6">(6)</a>, by integrating over possible values of \(x\) we find the probability distribution that at time \(t\) a neuron has not yet fired:
                 $$
@@ -104,7 +127,7 @@
         </p>
         
 
-        <h3 style="margin-bottom:0" id="exact_cases">Special cases with exact expressions</h3>
+        <h3 id="exact_cases">Special cases with exact expressions</h3>
         <p style="margin-top:0">
             There are some cases in which <a href="#mjx-eqn-6">(6)</a> is an exact solution to the Fokker-Planck equation. In this section I list two.
             <h4 style="margin-bottom:0">Perfect IF \(x_r=-\mu\)</h4>
@@ -146,12 +169,12 @@
                 $$ S(t) = \int_{-\infty}^0 P(x,t)dx = \frac{1}{\sqrt{2\pi\sigma^2t}}\left( \int_{-\infty}^0 \exp{\left[ -\frac{-(-x+x_re^{-kt})^2}{2\sigma^2t} \right]}dx - \exp{\left[-\frac{(x_re^{-kt})^2}{2\sigma^2t} \right]}\right)$$
             </p>
         </p>
-        <h3 style="margin-bottom:0">A1: Steps towards an exact expression</h3>
+        <h3>Steps towards an exact expression</h3>
         <p style="margin-top:0">
             Plugging \(\hat{P}_c\) into <a href="#mjx-eqn-4">(4)</a> leads to the equation
                 $$ \frac{\partial \hat{P}_c}{\partial t} - kx_re^{-kt}\frac{\partial \hat{P}_c}{\partial x} - \frac{\sigma^2}{2}\frac{\partial^2 \hat{P}_c}{\partial x^2} = -2\frac{(-x+2x_c-x_re^{-kt})^2}{\sigma^2t}\hat{P}_c. \tag{A1}$$
         </p>
-        <h3 style="margin-bottom:0">References:</h3>
+        <h3>References:</h3>
         <ul>
             <li>Gerstein, G.L., & Mandelbrot, B. (1964). <i>Random walk models for the spike activity of a single neuron.</i> Biophy. j., 4(1), 41-68.</li>
             <li>Gluss, B. (1967). <i>A model for neuron firing with exponential decay of potential resulting in diffusion equations for probability density.</i> Bull. math. biophys., 29(2), 233-243.</li>
