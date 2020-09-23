@@ -205,7 +205,7 @@
 <script src="menu.js"></script>
 <script>
     function loadBlogMenu() {
-        var blogmenu = document.createElemen('div');
+        var blogmenu = document.createElement('div');
         blogmenu.innerHTML = '<br><hr><br><nav> <ul><li><a href="#fpt">First-passage-time distribution of leaky IF neuron</a></li></ul></nav>';
         while (blogmenu.firstChild) {
             document.getElementById("menu").appendChild(blogmenu.firstChild);
