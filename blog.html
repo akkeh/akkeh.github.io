@@ -29,12 +29,12 @@
         }
     </style>
 </head>
-<body onload="loadMenu(); loadBlogMenu()">
+<body onload="loadMenu(); loadBlogMenu();">
 	<header>
 		<h1>/blog</h1>
 	</header>
 	<nav id="menu"><!-- gets populated by body.onload() --> </nav>
-    <nav id="blogmenu"><!-- gets filled by onload ---></nav>
+    <nav id="blogmenu"><!-- gets filled by body.onload() --></nav>
     <main>
         <h2 style="margin:1; margin-bottom:0"><span style="font-weight:normal"></span>Introduction</h2>
 
@@ -203,11 +203,12 @@
 -->
 <hr style="height:1px; background-color:black">
 </main>
-<script src="menu.js">
+<script src="menu.js"></script>
+<script>
     function loadBlogMenu() {
         document.getElementById("blogmenu").innerHTML = '<nav> <ul><li><a href="#fpt">First-passage-time distribution of leaky IF neuron</a></li></ul></nav>'
 };
-
 </script>
+
 </body>
 </html>
