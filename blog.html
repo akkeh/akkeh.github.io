@@ -207,7 +207,9 @@
     function loadBlogMenu() {
         var blogmenu = document.createElemen('div');
         blogmenu.innerHTML = '<br><hr><br><nav> <ul><li><a href="#fpt">First-passage-time distribution of leaky IF neuron</a></li></ul></nav>';
-        document.getElementById("menu").appendChild(blogmenu);
+        while (blogmenu.firstChild) {
+            document.getElementById("menu").appendChild(blogmenu.firstChild);
+        }
 };
 </script>
 
