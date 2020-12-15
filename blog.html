@@ -37,10 +37,41 @@
     <main>
         <h2 style="margin:1; margin-bottom:0"><span style="font-weight:normal"></span>Introduction</h2>
 
-        <p>A collection of short essays about several topics that interest me. I write about my main interest: theoretical neuroscience, and its connection to other topics such as philosophy. biotechnology, biology, society, computers and politics. Besides that I will include short snippets of code and small 'tutorials' on techniques that interest me.
+        <p>A collection of short essays about several topics that interest me. I write about my main interest: theoretical neuroscience, and its connection to other topics such as philosophy, biotechnology, biology, society, computers and politics. Besides that I will include short snippets of code and small 'tutorials' on techniques that interest me.
         </p>
-        <hr style="height:1px;background-color:black"><br><br>
+        <hr style="height:2px;background-color:black"><br><br>
 	    
+        <h2 id="nas"><span style="font-weight:normal">20201215</span> Neuronal cell assemblies</h2>
+        <i>neuronal cell assemblies; cell assemblies;</i>
+        <p>
+            Neuronal assemblies, groups of neurons that are active in a coordinated way, and are thought to 'bridge' the single neuron scale with that of global brain dynamics. But what exactly neuronal assemblies are remains a topic of debate. 
+            Some aspects on which a consensus exists are that
+            <ol>
+                <li> a neuronal assembly &mdash;as stated before&mdash; is a group of transiently coordinated neurons (Hebb, 1949; Legendy, 1967; Varela et al., 2001);</li>
+                <li> these groups can be associatively linked (Hebb, 1949; Legendy, 1967; Palm, 1982); and </li>
+                <li> neurons can be part of multiple assemblies and not all neurons need to partake each time in the activity of an assembly (Legendy, 1967; Palm, 1982).</li>
+            </ol>
+            Clearly, what is lacking from these properties is an account of the relevance of neuronal assemblies in connecting single neurons to cognition and behaviour.
+        </p>
+        <p>
+            A connectionist (the presently prevalent way to think about the brain) account of neuronal assemblies would have combinations of neurons represent different aspects of a stimulus, action, or thought (such as color, shape, which muscles to contract in order to move a hand, etc.), and as such assemblies of neurons would represent 'higher level' concepts (a red ball, a green triangle, a synchronous movement of hand and arm, etc.). In this way a neuronal assembly would function as a meso-scale neuron for meso-scale concepts, not very different from the idea of the grandmother cell (just arguably with a cooler name).
+            I would object however that with this conception we throw away a lot of potentiality of neuronal assemblies. 
+        </p>
+        <p>
+            I propose a conception of neuronal assemblies as (elements of) transiently self-organised structures that underlie cognition (Varela et al., 2001). In this way there is no necessary mapping between neuronal assemblies and (parts of) stimuli or behaviours. These associations are of course a possibility, but the important part for me it to retain the virtuality of the internal dynamics that makes up a neuronal assembly. In this way an assembly becomes more than a 'sum of neurons', but serves as a qualitatively different phenomenon. What needs to be explained now is the internal dynamics of these assemblies, and how these assemblies afford interactions between eachother in order to create the structures needed to behave. 
+            <!---I am currently writing a conceptual paper that links the (internal) dynamics of neuronal assemblies to the theory of autopoiesis. This connection will -->
+        <!--This connection explains the organisation of asssemblies beyond a combinatorial account (a summation of single neurons), but as a qualitatively different phenomenon.-->
+            <!--My proposal for the conceptualisation of neuronal assemblies can be summarised as such: the self-organising activity of groups of neurons leading to the creation of structure in the &mdash;relatively&mdash; undifferentiated medium that is the brain. -->
+        </p>
+        <h3>References:</h3>
+        <ul>
+            <li>Hebb, D.O. (1949). <i>The organization of behavior:  a neuropsychological theory</i>.</li>
+            <li>Legendy, C. (1967). <i>On the scheme by which the human brain stores information</i>. Mathematical Biosciences, 1(4):555–597</li>
+            <li>Palm, G. (1982). <i>Neural assemblies: An alternative approach to artificial intelligence</i>.</li>
+            <li>Varela, F., Lachaux, J.-P., Rodriguez, E., & Martinerie, J. (2001). <i> The brain-web: phase synchronization and large-scale integration</i>. Nature reviews neuroscience, 2(4):229–239</li>
+        </ul>
+        <hr style="height:1px;background-color:black"><br><br>
+
         <h2 id="fpt"><span style="font-weight:normal">20200915</span> First-passage-time distribution of leaky IF neuron</h2>
         <i>First-passage-time; Inter-spike-interval; leaky IF neuron</i>
         <p>
@@ -207,7 +238,7 @@
 <script>
     function loadBlogMenu() {
         var blogmenu = document.createElement('div');
-        blogmenu.innerHTML = '<br><br>blog posts:<nav><ul style="list-style-position:inside; padding-left:0; font-size:14px;"><li><a href="#fpt">First-passage-time distribution of leaky IF neuron</a></li><!-- <li><a href="#fpt">Second item</a></li> --></ul></nav>';
+        blogmenu.innerHTML = '<br><br>blog posts:<nav><ul style="list-style-position:inside; padding-left:0; font-size:14px;"><li><a href="#nas">Neuronal cell assemblies</a></li><li><a href="#fpt">First-passage-time distribution of leaky IF neuron</a></li><!-- <li><a href="#fpt">Second item</a></li> --></ul></nav>';
         while (blogmenu.firstChild) {
             document.getElementById("menu").appendChild(blogmenu.firstChild);
         }
